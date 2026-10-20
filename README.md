@@ -4,6 +4,15 @@
 
 > Windows 无线设备电量一览：蓝牙设备、2.4G 键鼠手柄和可选的本机电池，都能在托盘与历史记录中查看。
 
+> **本 fork 新增**：英菲克 F1 2.4G 鼠标适配（`feature/inphic-f1` 已合并入本分支）。
+> **要给新 2.4G 设备写电量适配，读 [docs/dev/adaptation-guide.md](docs/dev/adaptation-guide.md)** ——
+> 从确认 VID/PID、被动嗅探、主动发查询帧、逆向帧格式、写插件到真机验证的完整流程，
+> 附 F1 真实案例（公版 `1EA7:0066`，查询帧 `B5 01` → 响应 `B5 01 01 <电量>`）。
+> 快速路径：`cd src/tests/VigilWatt.HidSniff && dotnet run -- --vid XXXX --pid YYYY --seconds 180`（被动嗅探）→
+> `--probe`（主动探测）→ 照 `Plugins/Inphic/InphicF1Plugin.cs` 抄插件 → 改 `AppSettings.cs` 开关 →
+> 看 `%LocalAppData%\VigilWatt\logs` 日志验收。
+
+
 ![Platform](https://img.shields.io/badge/Windows-10%2F11-0078d4) ![.NET](https://img.shields.io/badge/.NET-8-512bd4) ![License](https://img.shields.io/badge/license-MIT-green) [![Release](https://img.shields.io/github/v/release/evren-oct/vigil-watt?label=release&color=blue)](https://github.com/evren-oct/vigil-watt/releases)
 
 ## 界面预览
