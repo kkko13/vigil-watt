@@ -45,6 +45,7 @@
     <Compile Include="..\..\VigilWatt.Core\Plugins\Delux\DeluxCodec.cs" />
     <Compile Include="..\..\VigilWatt.Core\Plugins\Delux\DockChargeFilter.cs" />
     <Compile Include="..\..\VigilWatt.Core\Plugins\Ganss\GanssCodec.cs" />
+    <Compile Include="..\..\VigilWatt.Core\Plugins\Inphic\InphicF1Codec.cs" />
     <Compile Include="..\..\VigilWatt.Core\Plugins\Sony\DualSenseCodec.cs" />
     <Compile Include="..\..\VigilWatt.Core\Plugins\Betop\BetopCodec.cs" />
     <Compile Include="..\..\VigilWatt.Core\Plugins\Logitech\HidppCodec.cs" />
