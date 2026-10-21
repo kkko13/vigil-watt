@@ -324,6 +324,7 @@ public static bool IsVendorInterface(ushort vid, ushort pid, ushort usagePage, u
 | 认领成功但电量乱跳/恒 0 | 把噪声字节当电量 | 回到 §3/§4 重新对比多轮数据；codec 校验加严 |
 | 读数突变 20+ 点被"过滤" | `BatteryReadingFilter` 异常保护（正常行为） | 真实深度掉电持续 5 分钟会自动采信，日志有 Warn 说明 |
 | 写帧插件开了开关也没反应 | `WritesEnabled` 读 `PluginEnabled[插件Name]`，Name 必须和字典键一字不差 | 核对 `Name => "..."` 与 settings.json 键 |
+| 休眠/闲置后设备显示离线、重启应用才好 | USB 选择性暂停或重枚举后**设备路径不变但旧句柄已死**（写报"设备没有连接"），基类按路径复用旧句柄永不重开 | 主动查询型插件在 `PollDevice` 失败路径里重开句柄（`dev.Handle.Dispose(); dev.Handle = dev.Info.Open();`，参考 InphicF1Plugin.TryReopen） |
 | 换台电脑 dongle 枚举变了 | DevicePath 含接口号 `&MI_01&Col03`，机器间不同 | 不影响：匹配只看 VID/PID/集合特征，path 只用于句柄管理 |
 
 ## 10. 关键源码位置速查

@@ -46,11 +46,28 @@ public sealed class InphicF1Plugin : BatteryPluginBase
         var percent = QueryAsync(dev.Handle).GetAwaiter().GetResult();
         if (!percent.HasValue)
         {
+            // USB 选择性暂停/重枚举后旧句柄会变成"设备没有连接"且路径不变，
+            // 基类按路径复用旧句柄永不重开——查询失败时主动重开一次（真拔了会立刻再失败）。
+            TryReopen(dev);
             ReportPollFailure(dev);
             return null;
         }
         ReportPollAnswered(dev);
         return (percent, ChargingState.Unknown);
+    }
+
+    private static void TryReopen(TrackedDevice dev)
+    {
+        try
+        {
+            dev.Handle.Dispose();
+            dev.Handle = dev.Info.Open();
+            Log.Info($"英菲克 F1 已重开句柄: {dev.Status.DisplayName}");
+        }
+        catch (Exception ex)
+        {
+            Log.Warn($"英菲克 F1 重开句柄失败: {ex.Message}");
+        }
     }
 
     private async Task<int?> QueryAsync(HidDeviceHandle handle)
